@@ -69,7 +69,11 @@ class Bridge:
 
         print_("New connection")
         sSocket = socket.socket()
-        sSocket.connect((self._sHost, self._sPort))
+
+        try:
+            sSocket.connect((self._sHost, self._sPort))
+        except ConnectionRefusedError:
+            print_("Connection refused")
 
         connectionClosed = False
         endMessage       = ""
