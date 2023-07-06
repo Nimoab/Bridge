@@ -86,7 +86,13 @@ class Bridge:
             if len(rList) == 0: continue
 
             for srcSocket in rList:
-                data = srcSocket.recv(1024)
+
+                try:
+                    data = srcSocket.recv(1024)
+                except ConnectionResetError:
+                    connectionClosed = True
+                    endMessage       = "connection reset"
+                    break
 
                 if len(data) == 0:
                     connectionClosed = True
